@@ -1,0 +1,9 @@
+{
+    "dotnet-test-explorer.autoExpandTree": true,
+    "vssolution.altSolutionFolders": [
+        "Test",
+        "Src"
+    ],
+    "dotnet-test-explorer.runInParallel": true,
+    "vssolution.showOutputChannel": false
+}

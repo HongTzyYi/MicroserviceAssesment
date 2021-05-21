@@ -1,0 +1,88 @@
+# dockerRegistry is the image reposity source
+dockerRegistry: grassvalleyprerelease-on.azurecr.io
+# dockerImageTag is the tag of the image to pull
+dockerImageTag: latest
+
+image:
+    # name is the identifier of the image to be pulled
+    name: scs-store-FridgeStore
+    # pullPolicy is the image pull behavior
+    pullPolicy: Always
+
+deployment:
+    # replicas is the minimum number of pods to start with on deployment
+    replicas: 3
+    # port is the HTTP listener port of the service
+    port: 5000
+
+secrets:
+    # The name of existing secret with a GV Platform "clientId" and "clientSecret" key
+    # Note: This will take priority over values for secrets.gvpClientId and secrets.gvpClientSecret. Leave blank if using those values to create a new secret
+    api: ""
+    # A client id from GV Platform. Is not used if a value for secrets.api is provided
+    gvpClientId: ""
+    # A client secret from GV Platform. Is not used if a value for secrets.api is provided
+    gvpClientSecret: ""
+    # The name of existing collection of datastore related urls
+    # Note: This will take priority over values for secrets.scsMongoUrl. Leave blank if using those values to create a new secret
+    databases: ""
+    # A SCS Mongo DB url
+    scsMongoUrl: ""
+
+config:
+    # environment is the name of existing config with key for the GVP Address
+    # Note: This will take priority over value for config.gvpAddress. Leave blank if using that values to create a new config
+    environment: ""
+    # The root address of the cluster where GV Platform and SCS are running
+    gvpAddress: ""
+    
+global:
+    # imagePullSecret is the authorization token for the docker repository
+    imagePullSecret: ""
+
+ingress:
+    # routePrefix is the value prepended to the service route
+    routePrefix: ""
+    # enabled indicates whether to use Ingress
+    enabled: true
+    # path is the url endpoint of the service
+    path: "api/v1/store/FridgeStore"
+    annotations:
+    # kubernetes.io/ingress.class indicates what ingress controller to use
+        kubernetes.io/ingress.class: traefik
+
+healthcheck:
+    readiness: 
+        # initialDelaySeconds is seconds to wait before first readiness probe is done
+        initialDelaySeconds: 10
+        # periodSeconds is seconds to wait between each readiness probe
+        periodSeconds: 10
+        # check timeout
+        timeoutSeconds: 80
+        # port is the port to reach readiness endpoint
+        port: 5000
+    liveness:
+        # initialDelaySeconds is seconds to wait before first liveness probe is done
+        initialDelaySeconds: 15
+        # periodSeconds is seconds to wait between each liveness probe
+        periodSeconds: 20
+        # check timeout
+        timeoutSeconds: 80
+        # port is the port to reach liveness endpoint
+        port: 5000
+    
+# annotations is a collection of arbitrary, non-identifying metadata
+annotations:
+    #'true' will cause kubernetes HPA fail to retrieve resource metrics
+    #comment out will not work as the injection will still take place
+    #if turn on, do not merge to release/develop/master branch until a better way to handle conditional deployment
+    "sidecar.jaegertracing.io/inject": "false"
+#    "janitor/ttl": "24h"
+
+resources:
+    # A request is the amount of that resources that Kubernetes will guarantee for the container
+    requests:
+        # The amount of CPU resource
+        cpu: "100m"
+        # The amount of Memory resource
+        memory: "800Mi"

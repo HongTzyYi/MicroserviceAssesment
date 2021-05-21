@@ -1,0 +1,254 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Microservice Asessment: Fruit Storage API",
+    "version": "1.0.0",
+    "title": "Fridge of Fruits API"
+  },
+  "host": "10.251.54.245",
+  "basePath": "/api/v1/fridge",
+  "tags": [
+    {
+      "name": "Fruit Storage",
+      "description": "Operation on fruit storage"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/fruit": {
+      "get": {
+        "tags": [
+          "Fridge"
+        ],
+        "summary": "Returns all fruits stored in fridge",
+        "description": "Returns an array of available fruit",
+        "operationId": "getFruit",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Fruit"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/add": {
+      "post": {
+        "tags": [
+          "Fridge"
+        ],
+        "summary": "Add a fruit into fridge",
+        "description": "",
+        "operationId": "addFruit",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "fruit",
+            "description": "Information for the fruit to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Fruit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Fruit"
+            }
+          },
+          "400": {
+            "description": "Invalid Fruit info, add operation fail"
+          }
+        }
+      }
+    },
+    "/fruit/{fruitId}": {
+      "get": {
+        "tags": [
+          "Fridge"
+        ],
+        "summary": "Find fruit by ID",
+        "description": "Find fruit by ID, ID can be positive value only",
+        "operationId": "getFruitById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "fruitId",
+            "in": "path",
+            "description": "ID of fruit that needs to be fetched",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Fruit"
+            }
+          },
+          "400": {
+            "description": "Invalid fruit ID supplied",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "fruit ID supplied not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Fridge"
+        ],
+        "summary": "Delete fruit by ID",
+        "description": "Remove fruit data from storage by suppliying ID",
+        "operationId": "deleteFruit",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "fruitId",
+            "in": "path",
+            "description": "ID of the fruit that needs to be deleted",
+            "required": true,
+            "type": "string",
+            "minimum": 1
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid fruit ID supplied",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "fruit ID supplied not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Fridge"
+        ],
+        "summary": "Find fruit by ID",
+        "description": "Update fruit info by ID",
+        "operationId": "patchFruitById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "fruitId",
+            "in": "path",
+            "description": "ID of fruit that needs to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "fruit",
+            "description": "Information for the fruit to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Fruit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Fruit"
+            }
+          },
+          "400": {
+            "description": "Invalid fruit ID supplied",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "fruit ID supplied not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Fruit": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique ID associated for this fruit"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the fruit"
+        },
+        "color": {
+          "type": "string",
+          "description": "Color for the fruit"
+        },
+        "availability": {
+          "type": "integer",
+          "description": "Number of fruit available"
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "The message that describes the error of the response code."
+        }
+      }
+    }
+  },
+  "responses": {
+    "400": {
+      "description": "Invalid fruit ID supplied",
+      "schema": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "404": {
+      "description": "fruit ID supplied not found",
+      "schema": {
+        "$ref": "#/definitions/Error"
+      }
+    }
+  }
+}

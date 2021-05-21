@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  {{- with .Values.annotations }}
+  annotations:
+    {{- toYaml . | nindent 8 }}
+  {{- end }}
+  labels:
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/version: {{ .Chart.Version | quote }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Chart.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/managed-by: {{ .Release.Service }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Chart.Name }}
+        app.kubernetes.io/version: {{ .Chart.Version | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+    spec:
+      containers:
+      - name: {{ .Release.Name }}
+        image: "{{ .Values.dockerRegistry }}/{{ .Values.image.name }}:{{ .Values.dockerImageTag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        readinessProbe:
+          httpGet:
+            path: "{{ .Values.ingress.routePrefix }}/api/v1/store/FridgeStore/ready"
+            port: {{ .Values.healthcheck.readiness.port }}
+          initialDelaySeconds: {{ .Values.healthcheck.readiness.initialDelaySeconds }}
+          periodSeconds: {{ .Values.healthcheck.readiness.periodSeconds }}
+          timeoutSeconds: {{ .Values.healthcheck.readiness.timeoutSeconds }}
+        livenessProbe:
+          httpGet:
+            path: "{{ .Values.ingress.routePrefix }}/api/v1/store/FridgeStore/healthy"
+            port: {{ .Values.healthcheck.liveness.port }}
+          initialDelaySeconds: {{ .Values.healthcheck.liveness.initialDelaySeconds }}
+          periodSeconds: {{ .Values.healthcheck.liveness.periodSeconds }}
+          timeoutSeconds: {{ .Values.healthcheck.liveness.timeoutSeconds }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        env:
+        - name: GVSCS_NAMESPACE
+          value: {{ .Values.ingress.routePrefix }}
+        - name: GVSCS_PORT
+          value: '{{ .Values.deployment.port }}'
+        - name: GVPLATFORM_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              {{- if .Values.secrets.api }}
+              # Externally-created secret
+              name: {{ .Values.secrets.api }}
+              {{- else }}
+              # Secret created by chart
+              name: {{ .Release.Name }}-api
+              {{- end }}
+              key: gvpClientId
+        - name: GVPLATFORM_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              {{- if .Values.secrets.api }}
+              # Externally-created secret
+              name: {{ .Values.secrets.api }}
+              {{- else }}
+              # Secret created by chart
+              name: {{ .Release.Name }}-api
+              {{- end }}
+              key: gvpClientSecret
+        - name: GVPLATFORM_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              {{- if .Values.config.environment }}
+              name: {{ .Values.config.environment }}
+              {{- else }}
+              name: {{ .Release.Name }}-config
+              {{- end }}
+              key: gvpAddress
+        - name: SCS_MONGO_URL
+          valueFrom:
+            secretKeyRef:
+              {{- if .Values.secrets.databases }}
+              # Externally-created secret
+              name: {{ .Values.secrets.databases }}
+              {{- else }}
+              # Secret created by chart
+              name: {{ .Release.Name }}-secrets
+              {{- end }}
+              key: scsMongoUrl
+      {{- if .Values.global.imagePullSecret }}
+      imagePullSecrets:
+      - name: {{ .Values.global.imagePullSecret }}
+      {{- end }}

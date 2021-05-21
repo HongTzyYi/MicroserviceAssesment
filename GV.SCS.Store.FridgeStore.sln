@@ -1,0 +1,88 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GV.SCS.Store.FridgeStore", "Src\GV.SCS.Store.FridgeStore.csproj", "{95FF6602-4417-4CFD-A402-927EDD798747}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D8BEDD9A-A471-41A1-B849-3A100510DE38}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet.config = NuGet.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helm", "Helm", "{50FE8732-A8F8-43B3-B198-A0665F3C08E0}"
+	ProjectSection(SolutionItems) = preProject
+		Helm\Chart.yaml = Helm\Chart.yaml
+		Helm\values.yaml = Helm\values.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{7C2F3408-6B1D-4435-82E8-AB2C22BD8FB9}"
+	ProjectSection(SolutionItems) = preProject
+		Helm\templates\config-map.yaml = Helm\templates\config-map.yaml
+		Helm\templates\deployment.yaml = Helm\templates\deployment.yaml
+		Helm\templates\ingress.yaml = Helm\templates\ingress.yaml
+		Helm\templates\secret.yaml = Helm\templates\secret.yaml
+		Helm\templates\service.yaml = Helm\templates\service.yaml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GV.SCS.Store.FridgeStore.Test.Unit", "Test\Unit\GV.SCS.Store.FridgeStore.Test.Unit.csproj", "{E38FDD33-6FD7-487F-8FDF-27E58F4A45F2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GV.SCS.Store.FridgeStore.Test.Integration", "Test\Integration\GV.SCS.Store.FridgeStore.Test.Integration.csproj", "{6FF931C8-3CFB-4849-B810-A7E9F0FAF784}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{95FF6602-4417-4CFD-A402-927EDD798747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95FF6602-4417-4CFD-A402-927EDD798747}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95FF6602-4417-4CFD-A402-927EDD798747}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{95FF6602-4417-4CFD-A402-927EDD798747}.Debug|x64.Build.0 = Debug|Any CPU
+		{95FF6602-4417-4CFD-A402-927EDD798747}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{95FF6602-4417-4CFD-A402-927EDD798747}.Debug|x86.Build.0 = Debug|Any CPU
+		{95FF6602-4417-4CFD-A402-927EDD798747}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95FF6602-4417-4CFD-A402-927EDD798747}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95FF6602-4417-4CFD-A402-927EDD798747}.Release|x64.ActiveCfg = Release|Any CPU
+		{95FF6602-4417-4CFD-A402-927EDD798747}.Release|x64.Build.0 = Release|Any CPU
+		{95FF6602-4417-4CFD-A402-927EDD798747}.Release|x86.ActiveCfg = Release|Any CPU
+		{95FF6602-4417-4CFD-A402-927EDD798747}.Release|x86.Build.0 = Release|Any CPU
+		{E38FDD33-6FD7-487F-8FDF-27E58F4A45F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E38FDD33-6FD7-487F-8FDF-27E58F4A45F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E38FDD33-6FD7-487F-8FDF-27E58F4A45F2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E38FDD33-6FD7-487F-8FDF-27E58F4A45F2}.Debug|x64.Build.0 = Debug|Any CPU
+		{E38FDD33-6FD7-487F-8FDF-27E58F4A45F2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E38FDD33-6FD7-487F-8FDF-27E58F4A45F2}.Debug|x86.Build.0 = Debug|Any CPU
+		{E38FDD33-6FD7-487F-8FDF-27E58F4A45F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E38FDD33-6FD7-487F-8FDF-27E58F4A45F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E38FDD33-6FD7-487F-8FDF-27E58F4A45F2}.Release|x64.ActiveCfg = Release|Any CPU
+		{E38FDD33-6FD7-487F-8FDF-27E58F4A45F2}.Release|x64.Build.0 = Release|Any CPU
+		{E38FDD33-6FD7-487F-8FDF-27E58F4A45F2}.Release|x86.ActiveCfg = Release|Any CPU
+		{E38FDD33-6FD7-487F-8FDF-27E58F4A45F2}.Release|x86.Build.0 = Release|Any CPU
+		{6FF931C8-3CFB-4849-B810-A7E9F0FAF784}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FF931C8-3CFB-4849-B810-A7E9F0FAF784}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FF931C8-3CFB-4849-B810-A7E9F0FAF784}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6FF931C8-3CFB-4849-B810-A7E9F0FAF784}.Debug|x64.Build.0 = Debug|Any CPU
+		{6FF931C8-3CFB-4849-B810-A7E9F0FAF784}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6FF931C8-3CFB-4849-B810-A7E9F0FAF784}.Debug|x86.Build.0 = Debug|Any CPU
+		{6FF931C8-3CFB-4849-B810-A7E9F0FAF784}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FF931C8-3CFB-4849-B810-A7E9F0FAF784}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FF931C8-3CFB-4849-B810-A7E9F0FAF784}.Release|x64.ActiveCfg = Release|Any CPU
+		{6FF931C8-3CFB-4849-B810-A7E9F0FAF784}.Release|x64.Build.0 = Release|Any CPU
+		{6FF931C8-3CFB-4849-B810-A7E9F0FAF784}.Release|x86.ActiveCfg = Release|Any CPU
+		{6FF931C8-3CFB-4849-B810-A7E9F0FAF784}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7C2F3408-6B1D-4435-82E8-AB2C22BD8FB9} = {50FE8732-A8F8-43B3-B198-A0665F3C08E0}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2F1A8B2C-51E2-4E65-BCA9-3FCA4D88E136}
+	EndGlobalSection
+EndGlobal

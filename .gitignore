@@ -1,0 +1,7 @@
+.vs/
+bin/
+doc/
+HealthCheck/obj/
+Src/obj/
+Test/Unit/obj/
+Test/Integration/obj/

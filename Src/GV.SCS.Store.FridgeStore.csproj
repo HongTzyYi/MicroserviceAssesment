@@ -1,0 +1,85 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Company>Grass Valley</Company>
+    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;SA1101;SA1028;SA1413</NoWarn>
+    <DocumentationFile>..\doc\GV.SCS.Store.FridgeStore.xml</DocumentationFile>
+    <OutputPath>..\bin</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>..\doc\GV.SCS.Store.FridgeStore.xml</DocumentationFile>
+    <OutputPath>..\bin</OutputPath>
+    <NoWarn>1701;1702;SA1101;SA1028;SA1413</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove=".template.config\**" />
+    <Compile Remove="HealthCheckerTest\**" />
+    <Compile Remove="Test\**" />
+    <Content Remove=".template.config\**" />
+    <Content Remove="HealthCheckerTest\**" />
+    <Content Remove="Test\**" />
+    <EmbeddedResource Remove=".template.config\**" />
+    <EmbeddedResource Remove="HealthCheckerTest\**" />
+    <EmbeddedResource Remove="Test\**" />
+    <None Remove=".template.config\**" />
+    <None Remove="HealthCheckerTest\**" />
+    <None Remove="Test\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+      <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="3.1.2" />
+      <PackageReference Include="GV.SCS.Platform.Interface" Version="2.0.0.24" />
+      <PackageReference Include="GV.SCS.Shared" Version="0.2.535" />
+      <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="3.1.7" />
+      <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.2.0" />
+      <PackageReference Include="MongoDB.Driver" Version="2.10.2" />
+      <PackageReference Include="Morcatko.AspNetCore.JsonMergePatch.Document" Version="3.0.4" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
+      <PackageReference Include="Morcatko.AspNetCore.JsonMergePatch.NewtonsoftJson" Version="3.0.4" />
+      <PackageReference Include="NUlid" Version="1.5.0" />
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
+      <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.1.4" />
+      <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="nlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

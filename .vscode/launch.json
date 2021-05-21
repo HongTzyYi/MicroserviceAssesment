@@ -1,0 +1,52 @@
+{
+   // Use IntelliSense to find out which attributes exist for C# debugging
+   // Use hover for the description of the existing attributes
+   // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+   "version": "0.2.0",
+   "configurations": [
+       {
+           "name": ".NET Core Launch (console)",
+           "type": "coreclr",
+           "request": "launch",
+           "preLaunchTask": "build",
+           "program": "${workspaceFolder}/bin/netcoreapp3.1/GV.SCS.Store.FridgeStore.dll",
+           "args": [],
+           "cwd": "${workspaceFolder}",
+           "stopAtEntry": false,
+           "console": "internalConsole"
+       },
+        {
+            "name": ".NET Core Launch (web)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/bin/netcoreapp3.1/GV.SCS.Store.FridgeStore.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Src",
+            "stopAtEntry": false,
+            "launchBrowser": {
+                "enabled": false
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Production",
+                "GVSCS_NAMESPACE": "",
+                "GVPLATFORM_ADDRESS": "https://uptime2.gvnewsdev.com",
+                "GVPLATFORM_CLIENT_ID": "3296ffd88f7749f7963cdd308c8e24fc",
+                "GVPLATFORM_CLIENT_SECRET": "MzI5NmZmZDg4Zjc3NDlmNzk2M2NkZDMwOGM4ZTI0ZmM6MTJHRkJDaWV6ckdLZjZZa0JJS1hZK25iRzd6MGJvMWE3dHVFTzIvcEp0RTRMZThDZjRPSEVtTWJrb0ZzRk1ka0gzUHlFTTNVbENjZm1aVFV2eFd2Rmc9PQ==",
+                "GVSCS_APPSETTINGSPATH": "appsettings.json",
+                "SCS_MONGO_URL": "mongodb://localhost:27017",
+                "GVSCS_USE_STABLENAME": "false"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickProcess}"
+        }
+    ]
+}
