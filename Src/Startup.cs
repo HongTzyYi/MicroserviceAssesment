@@ -96,8 +96,6 @@ namespace GV.SCS.Store.FridgeStore
             Console.WriteLine($"EventLog host: {eventLogStableAddr}");
             Console.WriteLine($"GVP Logging host: {loggingStableAddr}");
 
-
-            // Add services for dependency injection here.
             services
                 .AddMvc()
                 .AddNewtonsoftJsonMergePatch();
@@ -134,8 +132,6 @@ namespace GV.SCS.Store.FridgeStore
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            // Perform configuration of the app builder here.
         }
 
     }
