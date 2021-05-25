@@ -6,8 +6,6 @@
 
 namespace GV.SCS.Store.FridgeStore.Controllers
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
@@ -16,12 +14,8 @@ namespace GV.SCS.Store.FridgeStore.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Newtonsoft.Json;
     using Swashbuckle.AspNetCore.Annotations;
-    using System.Linq;
 
-    /// debug: http://localhost:5000/swagger/index.html
-    /// debug: http://localhost:5000/api/v1/store/FridgeStore/swagger/index.html
     /// <summary>
     /// Controller for FridgeStore API
     /// </summary>
@@ -42,7 +36,7 @@ namespace GV.SCS.Store.FridgeStore.Controllers
 
         private ITenantContext TenantContext { get; }
 
-        private string FruitDataStorePath = "FruitData.txt";
+        private FruitDataOperation fruitDataOps = new FruitDataOperation();
 
         /// <summary>
         /// Get Fruit stored in file
@@ -67,7 +61,7 @@ namespace GV.SCS.Store.FridgeStore.Controllers
             var response = string.Empty;
             await Task.Run(() =>  
             {
-                response = ReadFruitData(id);
+                response = fruitDataOps.ReadFruitData(id);
 
             });
             if (response.Contains("Exception"))
@@ -75,7 +69,7 @@ namespace GV.SCS.Store.FridgeStore.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
 
-            return StatusCode(StatusCodes.Status200OK, response);
+            return response == "success" ? StatusCode(StatusCodes.Status200OK, "Success") : StatusCode(StatusCodes.Status400BadRequest, response);
         }
 
         /// <summary>
@@ -99,14 +93,14 @@ namespace GV.SCS.Store.FridgeStore.Controllers
             var response = string.Empty;
             await Task.Run(() =>
             {
-                response = ReadFruitData();
+                response = fruitDataOps.ReadFruitData();
             });
             if (response.Contains("Exception"))
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
 
-            return StatusCode(StatusCodes.Status200OK, response);
+            return response == "success" ? StatusCode(StatusCodes.Status200OK, "Success") : StatusCode(StatusCodes.Status400BadRequest, response);
         }
 
         /// <summary>
@@ -122,21 +116,22 @@ namespace GV.SCS.Store.FridgeStore.Controllers
         /// <response code="500">Bad gateway.</response>
         /// <returns>Task.</returns>
         [HttpPost]
-        [Route("/add")]
+        [Route("/fruit")]
         [Produces("application/json")]
         [SwaggerOperation("addFruit")]
         [SwaggerResponse(statusCode: 200, type: typeof(string), description: "Added new Fruit data successfully")]
-        [SwaggerResponse(statusCode: 404, type: typeof(string), description: "Requested id not found.")]
+        [SwaggerResponse(statusCode: 400, type: typeof(string), description: "Add Fail.")]
         [Authorize(Policy = "platform.readonly")]
         [Authorize(Policy = "platform")]
         public virtual async Task<IActionResult> AddFruit(string name, string color, int availability)
         {
+            var response = string.Empty;
             await Task.Run(() =>
             {
-                var ret = addFruitData(name, color, availability);
-
+                response = fruitDataOps.addFruitData(name, color, availability);
             });
-            return StatusCode(StatusCodes.Status200OK, "Success");
+
+            return response == "success" ? StatusCode(StatusCodes.Status200OK, "Success") : StatusCode(StatusCodes.Status400BadRequest, response);
         }
 
         /// <summary>
@@ -152,7 +147,7 @@ namespace GV.SCS.Store.FridgeStore.Controllers
         [Route("/fruit/{id}")]
         [SwaggerOperation("deleteFruit")]
         [SwaggerResponse(statusCode: 200, type: typeof(string), description: "Deleted fruit with supplied ID")]
-        [SwaggerResponse(statusCode: 404, type: typeof(string), description: "Requested id not found.")]
+        [SwaggerResponse(statusCode: 400, type: typeof(string), description: "Fail to Delete")]
         [Authorize(Policy = "platform.readonly")]
         [Authorize(Policy = "platform")]
         public virtual async Task<IActionResult> deleteFruitByID([FromRoute(Name = "id")][Required] string id)
@@ -160,10 +155,10 @@ namespace GV.SCS.Store.FridgeStore.Controllers
             var response = string.Empty;
             await Task.Run(() =>
             {
-                response = RemoveFruitData(id);
+                response = fruitDataOps.RemoveFruitData(id);
 
             });
-            return StatusCode(StatusCodes.Status200OK, response);
+            return response == "success" ? StatusCode(StatusCodes.Status200OK, "Success") : StatusCode(StatusCodes.Status400BadRequest, response);
         }
 
         /// <summary>
@@ -191,147 +186,10 @@ namespace GV.SCS.Store.FridgeStore.Controllers
             var response = string.Empty;
             await Task.Run(() =>
             {
-                response = UpdateFruitData(id, name, color, availability);
+                response = fruitDataOps.UpdateFruitData(id, name, color, availability);
 
             });
-            return StatusCode(StatusCodes.Status200OK, response);
-        }
-
-        private string ReadFruitData(string id = "")
-        {
-            var result = string.Empty;
-            try
-            {
-                if (System.IO.File.Exists(FruitDataStorePath))
-                {
-                    var storedFruit = System.IO.File.ReadAllLines(FruitDataStorePath);
-
-                    if (!string.IsNullOrEmpty(id))
-                    {
-                        result = storedFruit.Where(s => s.Contains("ID=" + id)).FirstOrDefault();
-                    }
-                    else
-                    {
-                        var resultList = new List<Dictionary<string, string>>();
-                        //Return whole list
-                        foreach(var item in storedFruit)
-                        {
-                            var dict = new Dictionary<string, string>();
-                            var currentEntry = item.Split('&');
-                            foreach(var keyValuePair in currentEntry)
-                            {
-                                dict.Add(keyValuePair.Split('=').FirstOrDefault(), keyValuePair.Split('=').LastOrDefault());
-                            }
-
-                            resultList.Add(dict);
-                        }
-                        
-                        return JsonConvert.SerializeObject(resultList);
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                return "Exception occurred: " + ex.ToString();
-            }
-
-            return string.IsNullOrEmpty(result) ? "No result with given ID:" + id : QueryStringToJson(result);
-        }
-
-        private string addFruitData(string Name, string Color, int Availability)
-        {
-            var addingData = "ID=" + Guid.NewGuid().ToString("N") + "&" + "Name=" + Name + "&" + "Color=" + Color + "&" + "Availability=" + Availability;
-            try
-            {
-                System.IO.File.AppendAllText(FruitDataStorePath, addingData + Environment.NewLine);
-            }
-            catch(Exception ex)
-            {
-                return "Exception occurred: " + ex.ToString();
-            }
-            
-            return "success";
-        }
-
-        private string RemoveFruitData(string id)
-        {
-            try
-            {
-                if (System.IO.File.Exists(FruitDataStorePath))
-                {
-                    var storedFruit = System.IO.File.ReadAllLines(FruitDataStorePath);
-
-                    if (!string.IsNullOrEmpty(id))
-                    {
-                        if (!storedFruit.Any(q => q.Contains("ID=" + id)))
-                        {
-                            return "No data exist for given ID";
-                        }
-
-                        var ToDelete = storedFruit.Where(s => !s.Contains("ID=" + id));
-                        System.IO.File.WriteAllLines(FruitDataStorePath, ToDelete);
-                    }
-                    else
-                    {
-                        return "ID not supplied";
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                return "Exception occured:" + ex.ToString();
-            }
-
-            return "success";
-        }
-
-        private string UpdateFruitData(string id, string name, string color, string availability)
-        {
-            var newData = "ID=" + id + "&Name=" + name + "&Color=" + color + "&Availability=" + availability;
-            try
-            {
-                if (System.IO.File.Exists(FruitDataStorePath))
-                {
-                    var storedFruit = System.IO.File.ReadAllLines(FruitDataStorePath);
-
-                    if (!string.IsNullOrEmpty(id))
-                    {
-                        if (!storedFruit.Any(q => q.Contains("ID=" + id)))
-                        {
-                            return "No data exist for given ID";
-                        }
-
-                        var oldData = storedFruit.Where(s => s.Contains("ID=" + id)).FirstOrDefault();
-                        var updatedData = storedFruit.Select(s => s.Replace(oldData, newData)).ToArray();
-                        System.IO.File.WriteAllLines(FruitDataStorePath, updatedData);
-                    }
-                    else
-                    {
-                        return "ID not supplied";
-                    }
-                }
-                else
-                {
-                    return "Fruit data file missing or fail to read";
-                }
-            }
-            catch(Exception ex)
-            {
-                return "Exception occurred: " + ex.ToString();
-            }
-
-            return "success";
-        }
-
-        private string QueryStringToJson(string queryString)
-        {
-            var dict = new Dictionary<string, string>();
-            var keyValuePair = queryString.Split('&');
-            foreach(var item in keyValuePair)
-            {
-                dict.Add(item.Split('=').FirstOrDefault(), item.Split('=').LastOrDefault());
-            }
-            return JsonConvert.SerializeObject(dict);
+            return response == "success" ? StatusCode(StatusCodes.Status200OK, "Success") : StatusCode(StatusCodes.Status400BadRequest, response);
         }
     }
 }

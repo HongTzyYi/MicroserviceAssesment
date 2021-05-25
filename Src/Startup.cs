@@ -2,30 +2,30 @@
 // Copyright (c) Grass Valley. All rights reserved.
 // </copyright>
 
-using System;
-using System.IO;
-using System.Reflection;
-using GV.SCS.Platform.Interface;
-using GV.SCS.Platform.Interface.Configuration;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Morcatko.AspNetCore.JsonMergePatch;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Filters;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using Microsoft.AspNetCore.JsonPatch.Operations;
-using System.Collections.Generic;
-
 #pragma warning disable SA1210, SA1310, SA1507
 
 namespace GV.SCS.Store.FridgeStore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Reflection;
+    using GV.SCS.Platform.Interface;
+    using GV.SCS.Platform.Interface.Configuration;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.JsonPatch.Operations;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
+    using Microsoft.OpenApi.Models;
+    using Morcatko.AspNetCore.JsonMergePatch;
+    using Swashbuckle.AspNetCore.Filters;
+    using Swashbuckle.AspNetCore.SwaggerGen;
+
     /// <summary>
     /// Startup configuration for SCS compatible MVC service.
     /// </summary>
@@ -54,15 +54,6 @@ namespace GV.SCS.Store.FridgeStore
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
             services.AddResponseCompression();
-
-            // for background logging use
-            // services.AddSingleton<ILoggerTaskQueue, LoggerTaskQueue>();
-            // services.AddHostedService<LoggerBackgroundService>();
-
-            // for any background-task
-            // services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
-            // services.AddHostedService<QueuedBackgroundService>();
-
 
             services
                 .AddSwaggerGen(c =>
@@ -113,19 +104,6 @@ namespace GV.SCS.Store.FridgeStore
 
             services.AddLogging(builder =>
                 builder.AddConsole());
-
-            // Project services
-
-            // check threads
-            // int workerThreadCount;
-            // int ioThreadCount;
-            // ThreadPool.GetMinThreads(out workerThreadCount, out ioThreadCount);
-            // Console.WriteLine("Default min worker thread: " + workerThreadCount);
-            // Console.WriteLine("Default min I/O thread: " + ioThreadCount);
-
-            // ThreadPool.GetMaxThreads(out workerThreadCount, out ioThreadCount);
-            // Console.WriteLine("Default max worker thread: " + workerThreadCount);
-            // Console.WriteLine("Default max I/O thread: " + ioThreadCount);
         }
 
         /// <inheritdoc/>
@@ -143,8 +121,7 @@ namespace GV.SCS.Store.FridgeStore
                 .UseSwagger()
                 .UseSwaggerUI(c =>
                 {
-                    //c.SwaggerEndpoint("/swagger-original.json", "GV.SCS.Store.FridgeStore"); //use swagger generated static page
-                    c.SwaggerEndpoint("v1/swagger.json", "GV.SCS.Store.FridgeStore"); //use controller generated page, link wont work
+                    c.SwaggerEndpoint("v1/swagger.json", "GV.SCS.Store.FridgeStore"); //uses controller generated page, link wont work
                 })
                 .UseHealthChecks(
                     "/healthy",

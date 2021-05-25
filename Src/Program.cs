@@ -26,7 +26,7 @@ namespace GV.SCS.Store.FridgeStore
             RunAsync(CreateWebHostBuilder().Build()).GetAwaiter().GetResult();
 
         /// <summary>
-        /// blablabla.
+        /// CreateWebHostBuilder
         /// </summary>
         /// <returns>IWebHostBuilder.</returns>
         public static IWebHostBuilder CreateWebHostBuilder() =>
@@ -40,7 +40,7 @@ namespace GV.SCS.Store.FridgeStore
                 .UseStartup<Startup>();
 
         /// <summary>
-        /// blablabla.
+        /// RunAsync
         /// </summary>
         /// <param name="host">host.</param>
         /// <param name="cancel">cancel.</param>
