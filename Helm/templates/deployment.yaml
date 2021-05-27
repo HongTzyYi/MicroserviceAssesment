@@ -32,14 +32,14 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         readinessProbe:
           httpGet:
-            path: "{{ .Values.ingress.routePrefix }}/api/v1/store/FridgeStore/ready"
+            path: "{{ .Values.ingress.routePrefix }}/api/v1/TestStoreFruit/ready"
             port: {{ .Values.healthcheck.readiness.port }}
           initialDelaySeconds: {{ .Values.healthcheck.readiness.initialDelaySeconds }}
           periodSeconds: {{ .Values.healthcheck.readiness.periodSeconds }}
           timeoutSeconds: {{ .Values.healthcheck.readiness.timeoutSeconds }}
         livenessProbe:
           httpGet:
-            path: "{{ .Values.ingress.routePrefix }}/api/v1/store/FridgeStore/healthy"
+            path: "{{ .Values.ingress.routePrefix }}/api/v1/TestStoreFruit/healthy"
             port: {{ .Values.healthcheck.liveness.port }}
           initialDelaySeconds: {{ .Values.healthcheck.liveness.initialDelaySeconds }}
           periodSeconds: {{ .Values.healthcheck.liveness.periodSeconds }}

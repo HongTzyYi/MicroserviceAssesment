@@ -4,7 +4,7 @@
 
 #pragma warning disable SA1210, SA1310, SA1507
 
-namespace GV.SCS.Store.FridgeStore
+namespace Test.Store.Fruit
 {
     using System;
     using System.Collections.Generic;
@@ -73,7 +73,7 @@ namespace GV.SCS.Store.FridgeStore
                     {
                         Title = "Test.Store.Fruit",
                         Version = "v1",
-                        Description = "Fruit storage API (Fridge) to create, update or get fruit data"
+                        Description = "Fruit storage API (Fridge) to create, delete, update or get fruit data"
                     });
                     c.IncludeXmlComments(xmlPath);
                 })
@@ -119,7 +119,7 @@ namespace GV.SCS.Store.FridgeStore
                 .UseSwagger()
                 .UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("v1/swagger.json", "GV.SCS.Store.FridgeStore"); //uses controller generated page, link wont work
+                    c.SwaggerEndpoint("v1/swagger.json", "Test.Store.Fruit"); //uses controller generated page, link wont work
                 })
                 .UseHealthChecks(
                     "/healthy",

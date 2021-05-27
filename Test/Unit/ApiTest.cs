@@ -5,12 +5,11 @@
 #pragma warning disable SA1005,SA1201,SA1507,SA1512,SA1611,SA1614,SA1629,SA1633,SA1636,SA1641,CS1573 //suppress static code analysis
 
 
-namespace GV.SCS.Store.FridgeStore.Test.Unit
+namespace Test.Store.Fruit.Test.Unit
 {
     using System;
     using System.IO;
     using System.Threading.Tasks;
-    using GV.SCS.Store.FridgeStore;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Moq;
@@ -18,6 +17,7 @@ namespace GV.SCS.Store.FridgeStore.Test.Unit
     using Newtonsoft.Json.Linq;
     using NUlid;
     using NUnit.Framework;
+    using FruitDataOperationController;
 
     /// <summary>
     /// An example suite of unit tests.
@@ -27,8 +27,8 @@ namespace GV.SCS.Store.FridgeStore.Test.Unit
         [TestFixture]
         public class FruitDataAPITest
         {
-            private Controllers.FruitDataOperation FruitDataOps = new Controllers.FruitDataOperation();
-            private Controllers.FridgeStoreApi FridgeStoreAPI = new Controllers.FridgeStoreApi(null, null);
+            private FruitDataOperation FruitDataOps = new FruitDataOperation();
+            private Controllers.TestStoreFruitApi TestStoreFruitAPI = new Controllers.TestStoreFruitApi(null, null);
 
             /// <summary>
             /// Setup testing values before each test 
@@ -54,7 +54,7 @@ namespace GV.SCS.Store.FridgeStore.Test.Unit
             [TestCase("Pecha", "Pink", 6)]
             public async Task AddFruit_APITest(string name, string color, int availabitiy)
             {
-                var response = await FridgeStoreAPI.AddFruit(name, color, availabitiy);
+                var response = await TestStoreFruitAPI.AddFruit(name, color, availabitiy);
                 var result = response as ObjectResult;
                 Assert.That(result.StatusCode, Is.EqualTo(200));
             }
@@ -62,7 +62,7 @@ namespace GV.SCS.Store.FridgeStore.Test.Unit
             [Test]
             public async Task GetFruit_APITest()
             {
-                var response = await FridgeStoreAPI.getFruit();
+                var response = await TestStoreFruitAPI.getFruit();
                 var result = response as ObjectResult;
                 Assert.That(JsonConvert.SerializeObject(result.Value), Is.Not.Null.And.Not.Empty);
             }
@@ -71,7 +71,7 @@ namespace GV.SCS.Store.FridgeStore.Test.Unit
             [TestCase("2ad2d0d75de543b896e12ab6d28be97c")]
             public async Task GetFruitByID_APITest(string id)
             {
-                var response = await FridgeStoreAPI.getFruitById(id);
+                var response = await TestStoreFruitAPI.getFruitById(id);
                 var result = response as ObjectResult;
                 Assert.That(JsonConvert.SerializeObject(result.Value), Is.Not.Null.And.Not.Empty);
             }
@@ -80,7 +80,7 @@ namespace GV.SCS.Store.FridgeStore.Test.Unit
             [TestCase("2ad2d0d75de543b896e12ab6d28be97c")]
             public async Task DeleteFruitByID_APITest(string id)
             {
-                var response = await FridgeStoreAPI.deleteFruitByID(id);
+                var response = await TestStoreFruitAPI.deleteFruitByID(id);
                 var result = response as ObjectResult;
                 Assert.That(result.StatusCode, Is.EqualTo(200));
             }

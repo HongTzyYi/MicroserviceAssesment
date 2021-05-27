@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "GV.SCS.Store.FridgeStore": {
+    "Test.Store.Fruit": {
       "commandName": "Project",
       "commandLineArgs": "--port 8080",
       "launchBrowser": true,

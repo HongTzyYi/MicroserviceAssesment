@@ -2,7 +2,7 @@
 // Copyright (c) Grass Valley. All rights reserved.
 // </copyright>
 
-namespace GV.SCS.Store.FridgeStore
+namespace Test.Store.Fruit
 {
     using System;
     using System.Threading;

@@ -1,14 +1,15 @@
-// <copyright file="FridgeStoreApi.cs" company="Grass Valley">
+// <copyright file="TestStoreFruitApi.cs" company="Grass Valley">
 // Copyright (c) Grass Valley. All rights reserved.
 // </copyright>
 
 #pragma warning disable SA1005,SA1201,SA1507,SA1512,SA1611,SA1614,SA1629,SA1633,SA1636,SA1641,CS1573 //suppress static code analysis
 
-namespace GV.SCS.Store.FridgeStore.Controllers
+namespace Test.Store.Fruit.Controllers
 {
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
+    using FruitDataOperationController;
     using GV.Platform.Logging;
     using GV.Platform.MultiTenancy;
     using Microsoft.AspNetCore.Authorization;
@@ -17,17 +18,17 @@ namespace GV.SCS.Store.FridgeStore.Controllers
     using Swashbuckle.AspNetCore.Annotations;
 
     /// <summary>
-    /// Controller for FridgeStore API
+    /// Controller for TestStoreFruit API
     /// </summary>
     [ApiExplorerSettings(IgnoreApi = false)]
-    [Description("Controller for FridgeStore API.")]
-    public class FridgeStoreApi : Controller
+    [Description("Controller for TestStoreFruit API.")]
+    public class TestStoreFruitApi : Controller
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FridgeStoreApi"/> class.
+        /// Initializes a new instance of the <see cref="TestStoreFruitApi"/> class.
         /// </summary>
         /// <param name="tenantContext">Tenant.</param>
-        public FridgeStoreApi(ILogging logger, ITenantContext tenantContext)
+        public TestStoreFruitApi(ILogging logger, ITenantContext tenantContext)
         {
             TenantContext = tenantContext;
         }

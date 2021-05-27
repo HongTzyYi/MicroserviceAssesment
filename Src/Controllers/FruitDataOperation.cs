@@ -2,7 +2,7 @@
 // Copyright (c) Grass Valley. All rights reserved.
 // </copyright>
 
-namespace GV.SCS.Store.FridgeStore.Controllers
+namespace FruitDataOperationController
 {
     using System;
     using System.Collections.Generic;

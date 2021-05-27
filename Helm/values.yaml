@@ -5,7 +5,7 @@ dockerImageTag: latest
 
 image:
     # name is the identifier of the image to be pulled
-    name: scs-store-FridgeStore
+    name: test-store-fruit
     # pullPolicy is the image pull behavior
     pullPolicy: Always
 
@@ -46,7 +46,7 @@ ingress:
     # enabled indicates whether to use Ingress
     enabled: true
     # path is the url endpoint of the service
-    path: "api/v1/store/FridgeStore"
+    path: "api/v1/TestStoreFruit"
     annotations:
     # kubernetes.io/ingress.class indicates what ingress controller to use
         kubernetes.io/ingress.class: traefik

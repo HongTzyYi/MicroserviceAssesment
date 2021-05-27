@@ -8,13 +8,13 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>..\bin</OutputPath>
-    <DocumentationFile>..\doc\GV.SCS.Store.FridgeStore.Test.xml</DocumentationFile>
+    <DocumentationFile>..\doc\Test.Store.Fruit.Test.xml</DocumentationFile>
     <NoWarn>1701;1702;SA1101;SA1028;SA1413</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\bin</OutputPath>
-    <DocumentationFile>..\doc\GV.SCS.Store.FridgeStore.Test.xml</DocumentationFile>
+    <DocumentationFile>..\doc\Test.Store.Fruit.Test.xml</DocumentationFile>
     <NoWarn>1701;1702;SA1101;SA1028;SA1413</NoWarn>
   </PropertyGroup>
 
@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Src\GV.SCS.Store.FridgeStore.csproj" />
+    <ProjectReference Include="..\..\Src\Test.Store.Fruit.csproj" />
   </ItemGroup>
 
 </Project>

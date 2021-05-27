@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GV.SCS.Store.FridgeStore", "Src\GV.SCS.Store.FridgeStore.csproj", "{95FF6602-4417-4CFD-A402-927EDD798747}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Store.Fruit", "Src\Test.Store.Fruit.csproj", "{95FF6602-4417-4CFD-A402-927EDD798747}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D8BEDD9A-A471-41A1-B849-3A100510DE38}"
 	ProjectSection(SolutionItems) = preProject
@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{
 		Helm\templates\service.yaml = Helm\templates\service.yaml
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GV.SCS.Store.FridgeStore.Test.Unit", "Test\Unit\GV.SCS.Store.FridgeStore.Test.Unit.csproj", "{E38FDD33-6FD7-487F-8FDF-27E58F4A45F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Store.Fruit.Test.Unit", "Test\Unit\Test.Store.Fruit.Test.Unit.csproj", "{E38FDD33-6FD7-487F-8FDF-27E58F4A45F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

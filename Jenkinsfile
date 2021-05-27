@@ -1,6 +1,6 @@
 #!groovy
 
-def ProjectName = 'scs-store-FridgeStore'
+def ProjectName = 'test-store-fruit'
 def AgentLabel = "${ProjectName}-agent"
 
 podTemplate(
